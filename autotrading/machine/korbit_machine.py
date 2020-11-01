@@ -1,4 +1,7 @@
 import configparser
+
+import requests
+
 from autotrading.machine.base_machine import Machine
 
 
@@ -32,3 +35,57 @@ class KorbitMachine(Machine):
         self.access_token = None
         self.refresh_token = None
         self.token_type = None
+        self.expire = None
+
+    def set_token(self, grant_type="client_credentials"):
+        """액서스 토근 정보를 만들기 위한 메서드 입니다.
+        grant_type=client_credentials 지정
+        기존의 password 방식을 계속 사용할 수 있으나, 보안을 위하여 권장하지 않는다.
+
+        :returns
+            만료시간(expire), 액서스 토큰(access_token), 리프레시 토큰(refresh_token)을 반환합니다.
+
+        :raises
+            grant_type이 client_credentials이나 refresh_token이 아닌 경우 Exception을 발생시킵니다.
+
+        """
+
+        token_api_path = "/v1/oauth2/access_token"
+        url_path = self.BASE_API_URL + token_api_path
+
+        if grant_type == "client_credentials":
+            data = {"client_id": self.CLIENT_ID,
+                    "client_secret": self.CLIENT_SECRET,
+                    "grant_type": grant_type}
+        elif grant_type == "refresh_token":
+            data = {"client_id": self.CLIENT_ID,
+                    "client_secret": self.CLIENT_SECRET,
+                    "refresh_token": self.refresh_token,
+                    "grant_type": grant_type}
+        else:
+            raise Exception("Unexpected grant_type")
+
+        res = requests.post(url_path, data=data)
+        result = res.json()
+        self.access_token = result["access_token"]
+        self.refresh_token = result["refresh_token"]
+        self.token_type = result["token_type"]
+        self.expire = result["expires_in"]
+        return self.expire, self.access_token, self.refresh_token
+
+    def get_token(self):
+        """액세스 토큰 정보를 받기 위한 메서드입니다.
+        :returns
+            액세스 토큰(access_token이 있는 경우 봔환합니다.
+
+        :raises
+            access_token이 없는 경우 Exception을 발생시킵니다.
+        """
+
+        if self.access_token is not None:
+            return self.access_token
+        else:
+            raise Exception("Need to set_token")
+
+
+
