@@ -98,7 +98,9 @@ class CoinOneMachine(Machine):
 
         """
         V2 Private API 인증방식 설명 작성
-        
+        1. HTTP Header 에 X-COINONE-PAYLOAD 와 X-COINONE-SIGNATURE 전송
+            - X-COINONE-PAYLOAD는 access_token과 nonce 딕셔러리를 json으로 변경한뒤 BASE64로 Encoding 한 객체
+            - nonce는 증가하는 정수값으로 int(time.time()) 형태로 적용
         """
 
 
