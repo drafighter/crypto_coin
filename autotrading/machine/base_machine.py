@@ -38,26 +38,26 @@ class Machine(ABC):
     #     """
     #     pass
     #
-    # @abstractmethod
-    # def buy_order(self):
-    #     """매수주문을 실행하는 메서드입니다.
-    #     """
-    #     pass
-    #
-    # @abstractmethod
-    # def sell_order(self):
-    #     """매도주문을 실행하는 메서드입니다.
-    #     """
-    #     pass
-    #
-    # @abstractmethod
-    # def cancel_order(self):
-    #     """취소주문을 실행하는 메서드입니다.
-    #     """
-    #     pass
-    #
-    # @abstractmethod
-    # def get_my_order_status(self):
-    #     """사용자의 주문 상세 정보를 조회하는 메서드입니다.
-    #     """
-    #     pass
+    @abstractmethod
+    def buy_order(self):
+        """매수주문을 실행하는 메서드입니다.
+        """
+        pass
+
+    @abstractmethod
+    def sell_order(self):
+        """매도주문을 실행하는 메서드입니다.
+        """
+        pass
+
+    @abstractmethod
+    def cancel_order(self):
+        """취소주문을 실행하는 메서드입니다.
+        """
+        pass
+
+    @abstractmethod
+    def get_my_order_status(self):
+        """사용자의 주문 상세 정보를 조회하는 메서드입니다.
+        """
+        pass
