@@ -1,3 +1,5 @@
+import configparser
+
 from pymongo import MongoClient
 
 from autotrading.db.base_handler import DBHandler
@@ -19,6 +21,20 @@ class MongoDBHandler(DBHandler):
         :raise
             db_name 과 collection_name 이 없으면 Exception 발생
         """
+
+        if db_name is None or collection_name is None:
+            raise Exception("Need to db name and collection name")
+
+        config = configparser.ConfigParser()
+        config.read('conf/config.ini')
+
+        self.db_config = {}
+        self.db_config["local_ip"] = config["MONGODB"]["local_ip"]
+        self.db_config["port"] = config["MONGODB"]["port"]
+        self.db_config["remote_host"] = config["MONGODB"]["remote_host"]
+        self.db_config["remote_port"] = config["MONGODB"]["remote_port"]
+        self.db_config["user"] = config["MONGODB"]["user"]
+        self.db_config["password"] = config["MONGODB"]["password"]
 
         if mode == "remote":
             self._client = MongoClient("mongodb://{user}:{password}@{remote_host}:{port}".format(**self.db_config))

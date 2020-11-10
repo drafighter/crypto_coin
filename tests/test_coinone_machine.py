@@ -67,9 +67,9 @@ class CoinOneMachineTestCase(unittest.TestCase):
     #     assert result
     #     print(result)
 
-    def test_get_my_order_status(self):
-        print(inspect.stack()[0][3])
-        result = self.coinone_machine.get_my_order_status(currency_type="xrp",
-                                                          order_id="7c109958-1e4d-11e9-9ec7-00e04c3600d7")
-        assert result
-        print(result)
+    # def test_get_my_order_status(self):
+    #     print(inspect.stack()[0][3])
+    #     result = self.coinone_machine.get_my_order_status(currency_type="xrp",
+    #                                                       order_id="7c4dc5a9-1e4d-11e9-9ec7-00e04c3600d7")
+    #     assert result
+    #     print(result)

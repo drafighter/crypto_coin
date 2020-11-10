@@ -153,7 +153,7 @@ class CoinOneMachine(Machine):
                    "X-COINONE-SIGNATURE": signature
                    }
 
-        res = requests.post(url_path, headers=headers, data=payload)
+        res = requests.post(url_path, headers=headers, data=payload, verify=False)
         result = res.json()
 
         # https://tariat.tistory.com/818 (dictionary, for문과 if문까지 한줄에 작성하기 참조)
@@ -193,7 +193,7 @@ class CoinOneMachine(Machine):
                    "X-COINONE-SIGNATURE": signature
                    }
 
-        res = requests.post(url_path, headers=headers, data=payload)
+        res = requests.post(url_path, headers=headers, data=payload, verify=False)
         result = res.json()
 
         return result
@@ -231,7 +231,7 @@ class CoinOneMachine(Machine):
                    "X-COINONE-SIGNATURE": signature
                    }
 
-        res = requests.post(url_path, headers=headers, data=payload)
+        res = requests.post(url_path, headers=headers, data=payload, verify=False)
         result = res.json()
 
         return result
@@ -272,7 +272,7 @@ class CoinOneMachine(Machine):
                    "X-COINONE-SIGNATURE": signature
                    }
 
-        res = requests.post(url_path, headers=headers, data=payload)
+        res = requests.post(url_path, headers=headers, data=payload, verify=False)
         result = res.json()
 
         return result
@@ -302,7 +302,7 @@ class CoinOneMachine(Machine):
                    "X-COINONE-SIGNATURE": signature
                    }
 
-        res = requests.post(url_path, headers=headers, data=payload)
+        res = requests.post(url_path, headers=headers, data=payload, verify=False)
         result = res.json()
 
         return result
@@ -334,18 +334,8 @@ class CoinOneMachine(Machine):
                    "X-COINONE-SIGNATURE": signature
                    }
 
-        res = requests.post(url_path, headers=headers, data=payload)
+        res = requests.post(url_path, headers=headers, data=payload, verify=False)
         result = res.json()
 
         return result
-
-
-        
-
-
-
-
-
-
-
 
