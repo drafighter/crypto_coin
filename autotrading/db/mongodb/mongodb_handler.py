@@ -136,5 +136,66 @@ class MongoDBHandler(DBHandler):
             self._collection = self._db[collection_name]
         return self._collection.find_one(condition)
 
+    def delete_items(self, condition=None, db_name=None, collection_name=None):
+        """
+        MongoDB에 다수의 document를 삭제하기 위한 몌소드입니다.
 
+        Args:
+            condition (dict): 삭제 조건을 dictionary 형태로 받습니다.
+            db_name (str): MongoDB에서 database에 해당하는 이름을 받습니다.
+            collection_name (str): database에 속하는 collection 이름을 받습니다.
+
+        Returns:
+            DeleteResult : PyMongo의 문서의 삭제 결과 객체 DeleteResult가 반환됩니다.
+        """
+        if condition is None:
+            raise Exception("Need to condition")
+        if db_name is not None:
+            self._db = self._client[db_name]
+        if collection_name is not None:
+            self._collection = self._db[collection_name]
+        return self._collection.delete_many(condition)
+
+    def update_items(self, condition=None, update_value=None, db_name=None, collection_name=None):
+        """
+        MongoDB에 다수의 document를 갱신하기 위한 몌소드입니다.
+
+        Args:
+            condition (dict): 갱신 조건을 dictionary 형태로 받습니다.
+            update_value (dict) : 깽신하고자 하는 값을 dictionary 형태로 받습니다.
+            db_name (str): MongoDB에서 database에 해당하는 이름을 받습니다.
+            collection_name (str): database에 속하는 collection 이름을 받습니다.
+
+        Returns:
+            UpdateResult : PyMongo의 문서의 갱신 결과 객체 UpdateResult가 반환됩니다.
+        """
+        if condition is None:
+            raise Exception("Need to condition")
+        if update_value is None:
+            raise Exception("Need to update value")
+        if db_name is not None:
+            self._db = self._client[db_name]
+        if collection_name is not None:
+            self._collection = self._db[collection_name]
+        return self._collection.update_many(filter=condition, update=update_value)
+
+    def aggregate(self, pipeline=None, db_name=None, collection_name=None):
+        """
+        MongoDB의 aggregate 작업을 위한 메소드 입니다.
+
+        Args:
+            pipeline (dict): 갱신 조건을 dictionary 형태로 받습니다.
+            db_name (str): MongoDB에서 database에 해당하는 이름을 받습니다.
+            collection_name (str): database에 속하는 collection 이름을 받습니다.
+
+        Returns:
+            CommandCursor : PyMongo의 CommandCursor가 반환됩니다.
+        """
+        if pipeline is None:
+            raise Exception("Need to pipeline")
+        if db_name is not None:
+            self._db = self._client[db_name]
+        if collection_name is not None:
+            self._collection = self._db[collection_name]
+        return self._collection.aggregate(pipeline)
 

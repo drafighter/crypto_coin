@@ -34,7 +34,7 @@ class MongoDBHandlerTestCase(unittest.TestCase):
     #     id = self.mongodb.insert_item(doc)
     #     assert id
     #     print(id)
-    #
+
     # def test_insert_items(self):
     #     print(inspect.stack()[0][3])
     #     docs = [{"item": "item1", "name": "test_insert_items"},
@@ -44,17 +44,46 @@ class MongoDBHandlerTestCase(unittest.TestCase):
     #     assert ids
     #     print(ids)
 
-    def test_find_item(self):
-        print(inspect.stack()[0][3])
-        doc = self.mongodb.find_item({"currency": "btc"})
-        print(doc)
+    # def test_find_item(self):
+    #     print(inspect.stack()[0][3])
+    #     doc = self.mongodb.find_item({"currency": "btc"})
+    #     print(doc)
 
-    def test_find_items(self):
+    # def test_find_items(self):
+    #     print(inspect.stack()[0][3])
+    #     cursor = self.mongodb.find_items({"currency": "eth"})
+    #     assert cursor
+    #     for doc in cursor:
+    #         print(doc)
+
+    # def test_delete_items(self):
+    #     print(inspect.stack()[0][3])
+    #     result = self.mongodb.delete_items({"currency": "eth"})
+    #     assert result
+    #     print(result.deleted_count)
+
+    # def test_update_items(self):
+    #     print(inspect.stack()[0][3])
+    #     result = self.mongodb.update_items({"currency": "xrp"}, {"$set": {"price": 300}})
+    #     assert result
+    #     print("matched_count:" + str(result.matched_count))
+    #     print("modified_count:" + str(result.modified_count))
+
+    def test_aggregate(self):
         print(inspect.stack()[0][3])
-        cursor = self.mongodb.find_items({"currency": "eth"})
-        assert cursor
-        for doc in cursor:
-            print(doc)
+        pipeline = [
+            {"$match": {"currency": "btc"}},
+            {"$group": {"_id": "$currency",
+                        "min_val": {"$min": "$price"},
+                        "max_val": {"$max": "$price"},
+                        "sum_val": {"$sum": "$price"}
+                        }
+             }
+        ]
+        result = self.mongodb.aggregate(pipeline)
+        assert result
+        for item in result:
+            print(item)
 
     def tearDown(self):
         pass
