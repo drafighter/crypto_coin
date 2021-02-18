@@ -19,3 +19,7 @@ print(chart)
 d_1_close = chart.iloc[-2]['close']
 print(d_1_close)
 
+for i in range(5):
+    i = i * -1
+    chart.iloc[i]['close']
+
