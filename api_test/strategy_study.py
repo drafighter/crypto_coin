@@ -14,19 +14,33 @@ for a in tickers:
         # print(f"Found it! {a}")
         pass
 
-chart = pyupbit.get_ohlcv(ticker="KRW-ADX")
-# print(chart)
 
-# 5일 이동평균 구하기
-ma5 = chart['close'].rolling(5).mean()
+def bull_market_check(ticker):
+    chart = pyupbit.get_ohlcv(ticker)
+    # print(chart)
 
-# 현재 종가가 정해지지 않았기 때문에 전날의 ma5값을 읽어온다.
-last_ma5 = ma5[-2]
+    # 5일 이동평균 구하기
+    ma5 = chart['close'].rolling(5).mean()
 
-price = pyupbit.get_current_price(ticker="KRW-ADX")
+    # 현재 종가가 정해지지 않았기 때문에 전날의 ma5값을 읽어온다.
+    last_ma5 = ma5[-2]
 
-if price > last_ma5:
-    print(f"현재가 {price}이고, 전일 MA5가 {last_ma5} 이므로 상승장")
-else:
-    print(f"현재가 {price}이고, 전일 MA5가 {last_ma5} 이므로 하락장")
+    price = pyupbit.get_current_price(ticker)
 
+    if price > last_ma5:
+        # print(f"현재가 {price}이고, 전일 MA5가 {last_ma5} 이므로 상승장")
+        return True
+    else:
+        # print(f"현재가 {price}이고, 전일 MA5가 {last_ma5} 이므로 하락장")
+        return False
+
+
+tickers = pyupbit.get_tickers("KRW")
+
+for ticker in tickers:
+    is_bull = bull_market_check(ticker)
+
+    if is_bull:
+        print(ticker, " 상승장")
+    else:
+        print(ticker, " 하락장")
