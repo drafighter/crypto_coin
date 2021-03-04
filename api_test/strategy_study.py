@@ -15,8 +15,8 @@ for a in tickers:
         pass
 
 
-def bull_market_check(ticker):
-    chart = pyupbit.get_ohlcv(ticker)
+def bull_market_check(p_ticker):
+    chart = pyupbit.get_ohlcv(p_ticker)
     # print(chart)
 
     # 5일 이동평균 구하기
@@ -25,7 +25,7 @@ def bull_market_check(ticker):
     # 현재 종가가 정해지지 않았기 때문에 전날의 ma5값을 읽어온다.
     last_ma5 = ma5[-2]
 
-    price = pyupbit.get_current_price(ticker)
+    price = pyupbit.get_current_price(p_ticker)
 
     if price > last_ma5:
         # print(f"현재가 {price}이고, 전일 MA5가 {last_ma5} 이므로 상승장")

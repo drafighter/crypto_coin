@@ -1,26 +1,36 @@
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
+from PyQt5 import uic
+
+form_class = uic.loadUiType("ui/mywindow.ui")[0]
 
 
-class MyWindow(QMainWindow):
+class MyWindow(QMainWindow, form_class):
     def __init__(self):
         super().__init__()
-        self.setGeometry(300, 300, 400, 400)
-        self.setWindowIcon(QIcon("../../images/iconfinder_krusader_85.png"))
-
+        self.setupUi(self)
+        # self.setGeometry(300, 300, 400, 400)
+        # self.setWindowIcon(QIcon("../../images/iconfinder_krusader_85.png"))
+        # self.setWindowTitle("PyQt")
+        #
         # self.btn = QPushButton(text="매수", parent=self)
-        # self.close_btn = QPushButton(text="종료", parent=self)
-        # self.btn.move(10, 10)
-        # self.close_btn.move(100, 10)
-        # self.btn.clicked.connect(self.buy)
-        # self.close_btn.clicked.connect(QApplication.instance().quit)
+        # btn1 = QPushButton("버튼1", self)
+        # btn1.move(10, 10)
+        # btn2 = QPushButton("버튼2", self)
+        # btn2.move(10, 40)
+        # btn1.clicked.connect(self.btn_clicked)
 
-    def buy(self):
-        print("몽땅 매수")
+        self.pushButton.clicked.connect(self.btn_clicked)
+
+        # self.label = QLabel("Hello")
+        # self.label.show()
+
+    def btn_clicked(self):
+        print("버튼 클릭")
+        self.setGeometry(500, 300, 400, 400)
 
 
-print(sys.argv)
 app = QApplication(sys.argv)
 window = MyWindow()
 window.show()
