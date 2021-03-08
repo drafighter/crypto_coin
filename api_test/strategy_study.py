@@ -7,7 +7,7 @@ import pprint
 urllib3.disable_warnings()
 pd.options.display.float_format = "{:.1f}".format
 tickers = pyupbit.get_tickers('KRW')
-# pprint.pprint(tickers)
+pprint.pprint(tickers)
 
 for a in tickers:
     if 'LINK' in a:

@@ -28,14 +28,17 @@ class MyWindow(QMainWindow, form_class):
         # btn2.move(10, 40)
         # btn1.clicked.connect(self.btn_clicked)
 
-        self.pushButton.clicked.connect(self.btn_clicked)
+        # self.pushButton.clicked.connect(self.inquiry)
 
         # QTime 설정
         self.timer = QTimer(self)
         self.timer.start(1000)
-        self.timer.timeout.connect(self.timeout)
+        self.timer.timeout.connect(self.inquiry)
 
-    def btn_clicked(self):
+    def inquiry(self):
+        cur_time = QTime.currentTime()
+        str_time = cur_time.toString("hh:mm:ss")
+        self.statusBar().showMessage(str_time)
         # print("== 코인 현재가 조회 ==")
         price = pyupbit.get_current_price("KRW-BTC")
 
